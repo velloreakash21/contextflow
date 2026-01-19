@@ -1,6 +1,6 @@
 {
   "name": "@updatecode.ai/adapter-claude",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Claude (Anthropic) adapter for ContextFlow",
   "type": "module",
   "main": "dist/adapter.js",
@@ -11,14 +11,14 @@
       "import": "./dist/adapter.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@updatecode.ai/core": "^0.1.0"
+    "@updatecode.ai/core": "^0.2.0"
   },
   "peerDependencies": {
     "@anthropic-ai/sdk": ">=0.30.0"

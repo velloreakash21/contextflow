@@ -2,10 +2,14 @@
 
 ### Make Claude Code 40-60% more token-efficient
 
+[![npm](https://img.shields.io/npm/v/@updatecode.ai/core)](https://www.npmjs.com/package/@updatecode.ai/core)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 <p align="center">
   <a href="#the-problem">Problem</a> •
-  <a href="#claude-code-integration">Claude Code</a> •
+  <a href="#installation">Install</a> •
   <a href="#quick-start">Quick Start</a> •
+  <a href="#use-cases">Use Cases</a> •
   <a href="#core-features">Features</a>
 </p>
 
@@ -27,59 +31,232 @@ Context windows in January 2026 are massive:
 **But bigger isn't better.**
 
 Research shows:
-- **40-60% overspend** on API costs due to context inefficiency ([source](https://content-whale.com/us/blog/llm-context-engineering-information-retention/))
-- **"Lost in the middle"** - Models claiming 200k tokens become unreliable around 130k ([source](https://research.aimultiple.com/ai-context-window/))
-- **86% of copilot spending** ($7.2B) now goes to agent-based systems ([source](https://www.alphamatch.ai/blog/top-agentic-ai-frameworks-2026))
+- **40-60% overspend** on API costs due to context inefficiency
+- **"Lost in the middle"** - Models claiming 200k tokens become unreliable around 130k
+- **86% of copilot spending** ($7.2B) now goes to agent-based systems
 
 > *"Context engineering is the delicate art and science of filling the context window with just the right information."* — Andrej Karpathy
 
 ---
 
-## Claude Code Integration
+## Installation
 
-**Built specifically for Claude Code power users.**
+```bash
+# CLI (recommended for Claude Code users)
+npm install -g @updatecode.ai/cli
 
-Claude Code is amazing. But long sessions burn through context fast. ContextFlow fixes that.
+# Core library
+npm install @updatecode.ai/core
 
-```
-┌─────────────────────────────────────────────┐
-│  Claude Code / Cursor / Windsurf / IDEs     │
-├─────────────────────────────────────────────┤
-│  ContextFlow (efficiency layer)             │
-│  • Token tracking    • Agent isolation      │
-│  • Budget enforcement • Progressive loading │
-├─────────────────────────────────────────────┤
-│  Claude API (Sonnet, Opus, Haiku)           │
-└─────────────────────────────────────────────┘
+# With Claude adapter
+npm install @updatecode.ai/core @updatecode.ai/adapter-claude
+
+# With OpenAI adapter
+npm install @updatecode.ai/core @updatecode.ai/adapter-openai
 ```
 
-**Works with any Claude-powered tool:**
-- ✅ Claude Code (CLI)
-- ✅ Cursor
-- ✅ Windsurf
-- ✅ Continue.dev
-- ✅ Direct API
+### npm Packages
+
+| Package | Description |
+|---------|-------------|
+| [@updatecode.ai/core](https://www.npmjs.com/package/@updatecode.ai/core) | Core context management engine |
+| [@updatecode.ai/cli](https://www.npmjs.com/package/@updatecode.ai/cli) | CLI with TUI dashboard |
+| [@updatecode.ai/adapter-claude](https://www.npmjs.com/package/@updatecode.ai/adapter-claude) | Claude/Anthropic adapter |
+| [@updatecode.ai/adapter-openai](https://www.npmjs.com/package/@updatecode.ai/adapter-openai) | OpenAI adapter |
 
 ---
 
 ## Quick Start
 
-```bash
-npm install -g contextflow
+### CLI Usage
 
+```bash
+# Initialize in your project
+contextflow init
+
+# Run a task with tracking
+contextflow run "Add user authentication"
+
+# View real-time dashboard
+contextflow dashboard
+
+# Check status
+contextflow status
+```
+
+### Programmatic Usage
+
+```typescript
+import { ContextFlow } from '@updatecode.ai/core';
+import { ClaudeAdapter } from '@updatecode.ai/adapter-claude';
+
+const cf = new ContextFlow({
+  adapter: new ClaudeAdapter({
+    apiKey: process.env.ANTHROPIC_API_KEY,
+    model: 'claude-4.5-sonnet',
+  }),
+  contextBudget: 150000,
+  overflowStrategy: 'checkpoint',
+});
+
+// Track token usage
+cf.on('context.allocated', (e) => {
+  console.log(`Allocated ${e.data.allocation.tokens} tokens`);
+});
+
+// Execute with tracking
+const result = await cf.execute({
+  task: 'Implement user authentication',
+});
+
+console.log(cf.getBenchmarkMetrics());
+// { cer: 72.3, tcc: 0.34, cor: 0, ais: 95, pli: 80 }
+```
+
+---
+
+## Use Cases
+
+### Small Projects / Individual Developers
+
+Quick setup for personal projects:
+
+```bash
+npm install -g @updatecode.ai/cli
 cd your-project
 contextflow init
-contextflow run "Add user authentication"
-contextflow dashboard
+contextflow run "Build feature X"
 ```
+
+**Benefits:**
+- Zero config required
+- Real-time token visibility
+- Automatic overflow prevention
+
+### Medium Projects / Teams
+
+Team workflow with isolated agents:
+
+```bash
+contextflow init
+contextflow config set agentIsolation strict
+contextflow config set contextBudget 100000
+```
+
+```typescript
+import { ContextFlow } from '@updatecode.ai/core';
+import { ClaudeAdapter } from '@updatecode.ai/adapter-claude';
+
+const cf = new ContextFlow({
+  adapter: new ClaudeAdapter({ model: 'claude-4.5-sonnet' }),
+  contextBudget: 100000,
+  agentIsolation: 'strict',
+});
+
+// Register specialized agents
+cf.registerAgent({
+  id: 'implementer',
+  name: 'Code Implementer',
+  maxContextBudget: 50000,
+  tools: ['read_file', 'write_file', 'run_tests'],
+});
+
+cf.registerAgent({
+  id: 'reviewer',
+  name: 'Code Reviewer',
+  maxContextBudget: 30000,
+  tools: ['read_file', 'analyze'],
+});
+
+// Execute with agent isolation
+const result = await cf.execute({
+  task: 'Implement and review login feature',
+  agents: ['implementer', 'reviewer'],
+});
+```
+
+**Benefits:**
+- Agent isolation prevents context bloat
+- Team visibility via dashboard
+- Budget enforcement per agent
+
+### Enterprise / Large-Scale
+
+Full observability with benchmarking:
+
+```bash
+contextflow init
+contextflow config set enableBenchmarking true
+contextflow config set overflowStrategy checkpoint
+contextflow config set benchmarkOutput both
+```
+
+```typescript
+import { ContextFlow } from '@updatecode.ai/core';
+import { ClaudeAdapter } from '@updatecode.ai/adapter-claude';
+
+const cf = new ContextFlow({
+  adapter: new ClaudeAdapter({
+    apiKey: process.env.ANTHROPIC_API_KEY,
+    model: 'claude-4.5-opus',
+  }),
+  contextBudget: 150000,
+  overflowStrategy: 'checkpoint',
+  agentIsolation: 'strict',
+  maxParallelAgents: 5,
+  skillPreloadStrategy: 'predictive',
+  enableBenchmarking: true,
+  benchmarkOutput: 'both',
+});
+
+// Event-driven observability
+cf.on('context.allocated', logToDatadog);
+cf.on('context.overflow', alertOncall);
+cf.on('agent.completed', trackMetrics);
+
+// Progressive skill loading
+await cf.loadSkill('code-standards');
+await cf.loadSkill('security-guidelines');
+
+// Execute complex tasks
+const result = await cf.execute({
+  task: 'Refactor authentication system',
+  context: 'Microservices architecture',
+});
+
+// Export metrics
+const metrics = cf.getBenchmarkMetrics();
+console.log(metrics);
+// {
+//   cer: 78.5,      // Context Efficiency Ratio
+//   tcc: 0.42,      // Task Completion Cost ($)
+//   cor: 0,         // Context Overflow Rate
+//   ais: 98,        // Agent Isolation Score
+//   pli: 85,        // Progressive Loading Index
+//   totalTokens: 125000,
+//   usefulTokens: 98125,
+//   timeMs: 45000,
+//   peakContextUsage: 142000
+// }
+
+// Checkpoint for long-running tasks
+const checkpoint = cf.checkpoint();
+// ... later
+cf.restore(checkpoint);
+```
+
+**Benefits:**
+- Full observability and metrics
+- Integration with monitoring tools
+- Checkpoint/restore for reliability
+- Predictive skill loading
+- Cost tracking per task
 
 ---
 
 ## Core Features
 
 ### 1. Real-Time Token Tracking
-
-See exactly where tokens go:
 
 ```
 ┌─ ContextFlow Dashboard ───────────────────────┐
@@ -92,8 +269,6 @@ See exactly where tokens go:
 ```
 
 ### 2. Agent Isolation
-
-Spawn agents with isolated contexts—only results return:
 
 ```typescript
 // Bad: Everything in one bloated context
@@ -109,11 +284,9 @@ const result = await cf.execute({
 
 ### 3. Budget Enforcement
 
-Prevent overflow before it happens:
-
 ```typescript
 const cf = new ContextFlow({
-  adapter: new ClaudeAdapter({ apiKey }),
+  adapter,
   contextBudget: 150000, // Hard limit (75% of 200k)
   overflowStrategy: 'checkpoint',
 });
@@ -126,8 +299,6 @@ if (!cf.canAllocate(50000)) {
 ```
 
 ### 4. Progressive Skill Loading
-
-Load knowledge only when needed:
 
 ```typescript
 // Traditional: Load everything upfront
@@ -142,69 +313,6 @@ if (task.involves('testing')) {
 
 ---
 
-## Model Support (January 2026)
-
-| Provider | Models | Context | Status |
-|----------|--------|---------|--------|
-| OpenAI | GPT-5.2, GPT-5.2 Pro, o3 | 400k | ✅ Full |
-| Anthropic | Claude 4.5 Opus, Sonnet, Haiku | 200k | ✅ Full |
-| Google | Gemini 3 Pro, Flash | 2M | ✅ Full |
-| Meta | Llama 4 Scout, Maverick | 10M | 🚧 Beta |
-| xAI | Grok 4.1 | 256k | 🚧 Beta |
-| Local | Ollama, vLLM | Varies | 🚧 Beta |
-
-```typescript
-import { ContextFlow } from 'contextflow';
-import { ClaudeAdapter } from '@updatecode.ai/adapter-claude';
-import { OpenAIAdapter } from '@updatecode.ai/adapter-openai';
-
-// Same API, any model
-const cf = new ContextFlow({
-  adapter: new OpenAIAdapter({ model: 'gpt-5.2' }),
-});
-```
-
----
-
-## Integration Examples
-
-### With LangChain + MCP
-
-```typescript
-import { ContextFlowCallback } from 'contextflow/langchain';
-
-const chain = new LLMChain({
-  llm: new ChatAnthropic(),
-  callbacks: [new ContextFlowCallback()], // Track all token usage
-});
-```
-
-### With CrewAI
-
-```python
-from contextflow import ContextFlowMiddleware
-
-crew = Crew(
-    agents=[researcher, writer],
-    middleware=[ContextFlowMiddleware()],  # Isolate agent contexts
-)
-```
-
-### Standalone
-
-```typescript
-const cf = new ContextFlow({ adapter });
-
-cf.on('context.allocated', (e) => console.log(`+${e.data.tokens} tokens`));
-cf.on('context.overflow', (e) => console.log('WARNING: overflow predicted'));
-
-const result = await cf.execute({ task: 'Build feature' });
-console.log(cf.getBenchmarkMetrics());
-// { cer: 72.3, tcc: 0.34, cor: 0, ... }
-```
-
----
-
 ## CLI Commands
 
 ```bash
@@ -213,7 +321,20 @@ contextflow run "task"        # Execute with tracking
 contextflow dashboard         # Live TUI visualization
 contextflow status            # Show context state
 contextflow config            # Manage settings
+contextflow config list       # Show all settings
+contextflow config set <key> <value>  # Update setting
 ```
+
+---
+
+## Model Support (January 2026)
+
+| Provider | Models | Context | Status |
+|----------|--------|---------|--------|
+| Anthropic | Claude 4.5 Opus, Sonnet, Haiku | 200k | ✅ Full |
+| OpenAI | GPT-5.2, GPT-5.2 Pro, o3 | 400k | ✅ Full |
+| Google | Gemini 3 Pro, Flash | 2M | 🚧 Beta |
+| Meta | Llama 4 Scout, Maverick | 10M | 🚧 Beta |
 
 ---
 
@@ -229,6 +350,20 @@ contextflow config            # Manage settings
 
 ---
 
+## Architecture
+
+```
+packages/
+├── core/           # Token tracking, budget, events
+├── cli/            # Command-line interface
+├── adapters/
+│   ├── claude/     # Anthropic adapter
+│   └── openai/     # OpenAI adapter
+└── dashboard/      # Visualization
+```
+
+---
+
 ## Why This Matters
 
 | Without ContextFlow | With ContextFlow |
@@ -241,45 +376,10 @@ contextflow config            # Manage settings
 
 ---
 
-## Architecture
+## Links
 
-```
-packages/
-├── core/           # Token tracking, budget, events
-├── cli/            # Command-line interface
-├── adapters/
-│   ├── claude/     # Anthropic adapter
-│   ├── openai/     # OpenAI adapter
-│   ├── gemini/     # Google adapter
-│   └── ollama/     # Local models
-└── dashboard/      # Visualization
-```
-
----
-
-## Roadmap
-
-- [x] Core token tracking engine
-- [x] Claude & OpenAI adapters
-- [x] CLI with TUI dashboard
-- [x] Agent isolation
-- [ ] MCP integration
-- [ ] LangChain/CrewAI middleware
-- [ ] Web dashboard
-- [ ] Gemini/Llama adapters
-
----
-
-## Contributing
-
-```bash
-git clone https://github.com/stanza-soft/contextflow
-cd contextflow
-npm install
-npm run dev
-```
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+- **npm:** https://www.npmjs.com/org/updatecode.ai
+- **GitHub:** https://github.com/velloreakash21/contextflow
 
 ---
 
@@ -289,8 +389,4 @@ MIT
 
 ---
 
-**Sources:**
-- [Best LLMs for Extended Context Windows 2026](https://research.aimultiple.com/ai-context-window/)
-- [2025 LLM Review: GPT-5.2, Gemini 3, Claude 4.5](https://atoms.dev/blog/2025-llm-review-gpt-5-2-gemini-3-pro-claude-4-5)
-- [Top Agentic AI Frameworks 2026](https://www.alphamatch.ai/blog/top-agentic-ai-frameworks-2026)
-- [MCP vs LangChain vs CrewAI 2026](https://www.digitalapplied.com/blog/mcp-vs-langchain-vs-crewai-agent-framework-comparison)
+**Built for Claude Code power users.**

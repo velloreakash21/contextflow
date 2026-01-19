@@ -1,6 +1,6 @@
 {
   "name": "@updatecode.ai/core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Core context management engine for ContextFlow",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,7 +11,7 @@
       "import": "./dist/index.js"
     }
   },
-  "files": ["dist"],
+  "files": ["dist", "README.md"],
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
