@@ -6,7 +6,7 @@
   <a href="#the-problem">Problem</a> •
   <a href="#how-were-different">Difference</a> •
   <a href="#quick-start">Quick Start</a> •
-  <a href="https://contextflow.dev">Docs</a>
+  <a href="#core-features">Features</a>
 </p>
 
 ---
@@ -287,16 +287,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 ## License
 
 MIT
-
----
-
-<p align="center">
-  <b>Stop wasting tokens. Start measuring them.</b>
-  <br><br>
-  <a href="https://contextflow.dev">Docs</a> •
-  <a href="https://discord.gg/contextflow">Discord</a> •
-  <a href="https://twitter.com/contextflow">Twitter</a>
-</p>
 
 ---
 
