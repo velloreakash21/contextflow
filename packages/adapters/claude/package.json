@@ -1,5 +1,5 @@
 {
-  "name": "@contextflow/adapter-claude",
+  "name": "@updatecode.ai/adapter-claude",
   "version": "0.1.0",
   "description": "Claude (Anthropic) adapter for ContextFlow",
   "type": "module",
@@ -18,7 +18,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@contextflow/core": "workspace:*"
+    "@updatecode.ai/core": "^0.1.0"
   },
   "peerDependencies": {
     "@anthropic-ai/sdk": ">=0.30.0"

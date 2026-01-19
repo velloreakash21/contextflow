@@ -1,5 +1,5 @@
 {
-  "name": "@contextflow/adapter-openai",
+  "name": "@updatecode.ai/adapter-openai",
   "version": "0.1.0",
   "description": "OpenAI adapter for ContextFlow",
   "type": "module",
@@ -18,7 +18,7 @@
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@contextflow/core": "workspace:*"
+    "@updatecode.ai/core": "^0.1.0"
   },
   "peerDependencies": {
     "openai": ">=4.0.0"

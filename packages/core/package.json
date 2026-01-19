@@ -1,5 +1,5 @@
 {
-  "name": "@contextflow/core",
+  "name": "@updatecode.ai/core",
   "version": "0.1.0",
   "description": "Core context management engine for ContextFlow",
   "main": "dist/index.js",

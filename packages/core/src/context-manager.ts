@@ -61,8 +61,8 @@ export class ContextManager {
       source: request.source,
       tokens,
       timestamp: Date.now(),
-      label: request.label,
-      metadata: request.metadata,
+      ...(request.label !== undefined && { label: request.label }),
+      ...(request.metadata !== undefined && { metadata: request.metadata }),
     };
 
     this.allocations.set(id, allocation);
@@ -219,8 +219,9 @@ export class ContextManager {
       if (!result[allocation.source]) {
         result[allocation.source] = { count: 0, tokens: 0 };
       }
-      result[allocation.source].count++;
-      result[allocation.source].tokens += allocation.tokens;
+      const sourceData = result[allocation.source]!;
+      sourceData.count++;
+      sourceData.tokens += allocation.tokens;
     }
 
     return result;

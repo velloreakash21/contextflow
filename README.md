@@ -155,8 +155,8 @@ if (task.involves('testing')) {
 
 ```typescript
 import { ContextFlow } from 'contextflow';
-import { ClaudeAdapter } from '@contextflow/adapter-claude';
-import { OpenAIAdapter } from '@contextflow/adapter-openai';
+import { ClaudeAdapter } from '@updatecode.ai/adapter-claude';
+import { OpenAIAdapter } from '@updatecode.ai/adapter-openai';
 
 // Same API, any model
 const cf = new ContextFlow({
