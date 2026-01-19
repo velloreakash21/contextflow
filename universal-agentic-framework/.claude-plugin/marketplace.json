@@ -1,0 +1,68 @@
+{
+  "name": "agentic-init",
+  "version": "1.0.0",
+  "description": "Universal project initialization framework with intake interviews, ticket generation, dependency mapping, subagents, skills, and execution prompts",
+  "author": "Stanza Soft",
+  "license": "MIT",
+  "homepage": "https://github.com/stanza-soft/agentic-init",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stanza-soft/agentic-init.git"
+  },
+  "keywords": [
+    "claude-code",
+    "initialization",
+    "project-setup",
+    "tickets",
+    "subagents",
+    "skills",
+    "workflow",
+    "enterprise"
+  ],
+  "plugins": [
+    {
+      "name": "agentic-init-full",
+      "description": "Complete framework with all agents, skills, and commands",
+      "agents": [
+        "agents/ticket-executor.md",
+        "agents/code-reviewer.md",
+        "agents/codebase-explorer.md"
+      ],
+      "skills": [
+        "skills/code-standards",
+        "skills/testing"
+      ],
+      "commands": [
+        "commands/init-project.md",
+        "commands/execute-ticket.md"
+      ]
+    },
+    {
+      "name": "agentic-agents-only",
+      "description": "Just the subagents (ticket-executor, code-reviewer, codebase-explorer)",
+      "agents": [
+        "agents/ticket-executor.md",
+        "agents/code-reviewer.md",
+        "agents/codebase-explorer.md"
+      ]
+    },
+    {
+      "name": "agentic-skills-only",
+      "description": "Just the skills (code-standards, testing)",
+      "skills": [
+        "skills/code-standards",
+        "skills/testing"
+      ]
+    }
+  ],
+  "compatibility": {
+    "claude-code": ">=1.0.0",
+    "codex-cli": ">=1.0.0",
+    "cursor": ">=0.40.0",
+    "vscode-copilot": ">=1.0.0"
+  },
+  "install": {
+    "claude-code": "/plugin marketplace add stanza-soft/agentic-init",
+    "manual": "cp -r .claude/* ~/.claude/"
+  }
+}

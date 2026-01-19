@@ -1,0 +1,68 @@
+{
+  "name": "contextflow",
+  "version": "0.1.0",
+  "description": "Context efficiency layer for LLMs. Your AI wastes 40-60% of tokens. We fix that.",
+  "keywords": [
+    "ai",
+    "llm",
+    "context-window",
+    "claude",
+    "gpt-4",
+    "gemini",
+    "multi-agent",
+    "orchestration",
+    "benchmark",
+    "efficiency"
+  ],
+  "author": "Stanza Soft",
+  "license": "MIT",
+  "homepage": "https://contextflow.dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stanza-soft/contextflow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/stanza-soft/contextflow/issues"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "contextflow": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "lint": "turbo run lint",
+    "clean": "turbo run clean",
+    "benchmark": "node dist/cli/index.js benchmark",
+    "benchmark:quick": "npm run benchmark -- --quick",
+    "benchmark:full": "npm run benchmark -- --full",
+    "benchmark:compare": "npm run benchmark -- --compare",
+    "dashboard": "node dist/cli/index.js dashboard",
+    "typecheck": "tsc --noEmit"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0",
+    "prettier": "^3.1.0",
+    "eslint": "^8.55.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "npm@10.0.0"
+}

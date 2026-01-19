@@ -1,0 +1,30 @@
+{
+  "name": "@contextflow/adapter-openai",
+  "version": "0.1.0",
+  "description": "OpenAI adapter for ContextFlow",
+  "type": "module",
+  "main": "dist/adapter.js",
+  "types": "dist/adapter.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/adapter.d.ts",
+      "import": "./dist/adapter.js"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@contextflow/core": "workspace:*"
+  },
+  "peerDependencies": {
+    "openai": ">=4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.0"
+  }
+}
