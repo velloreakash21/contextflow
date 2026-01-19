@@ -1,10 +1,10 @@
 # ContextFlow
 
-### Your AI wastes 40-60% of tokens. We fix that.
+### Make Claude Code 40-60% more token-efficient
 
 <p align="center">
   <a href="#the-problem">Problem</a> •
-  <a href="#how-were-different">Difference</a> •
+  <a href="#claude-code-integration">Claude Code</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#core-features">Features</a>
 </p>
@@ -12,6 +12,8 @@
 ---
 
 ## The Problem
+
+Using **Claude Code** for complex projects? You're wasting tokens.
 
 Context windows in January 2026 are massive:
 
@@ -33,33 +35,30 @@ Research shows:
 
 ---
 
-## How We're Different
+## Claude Code Integration
 
-**We're not another agent framework.**
+**Built specifically for Claude Code power users.**
 
-The market has LangChain, CrewAI, AutoGen, and now MCP (the "USB-C for AI" that became a Linux Foundation standard in 2025).
-
-| Framework | What it does |
-|-----------|-------------|
-| LangChain | Chains, RAG, memory systems |
-| CrewAI | Role-based multi-agent teams (20k+ stars) |
-| AutoGen | Multi-agent conversations |
-| MCP | Standardized tool connections |
-| **ContextFlow** | **Makes ALL of them 40-60% more efficient** |
-
-ContextFlow is the **efficiency layer** that sits under any framework:
+Claude Code is amazing. But long sessions burn through context fast. ContextFlow fixes that.
 
 ```
 ┌─────────────────────────────────────────────┐
-│  Your App / LangChain / CrewAI / MCP        │
+│  Claude Code / Cursor / Windsurf / IDEs     │
 ├─────────────────────────────────────────────┤
 │  ContextFlow (efficiency layer)             │
 │  • Token tracking    • Agent isolation      │
 │  • Budget enforcement • Progressive loading │
 ├─────────────────────────────────────────────┤
-│  LLM APIs (GPT-5.2, Claude 4.5, Gemini 3)   │
+│  Claude API (Sonnet, Opus, Haiku)           │
 └─────────────────────────────────────────────┘
 ```
+
+**Works with any Claude-powered tool:**
+- ✅ Claude Code (CLI)
+- ✅ Cursor
+- ✅ Windsurf
+- ✅ Continue.dev
+- ✅ Direct API
 
 ---
 

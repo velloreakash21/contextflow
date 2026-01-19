@@ -1,7 +1,7 @@
 {
   "name": "contextflow",
   "version": "0.1.0",
-  "description": "Context efficiency layer for LLMs. Your AI wastes 40-60% of tokens. We fix that.",
+  "description": "Make Claude Code 40-60% more token-efficient. Context management for Claude-powered development.",
   "keywords": [
     "ai",
     "llm",
